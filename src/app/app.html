@@ -1,7 +1,15 @@
-<ul>
-  @for (user of users(); track user.id) {
-    <li>
-      #{{ user.id }} {{ user.name }} ({{ user.email }})
-    </li>
+<!-- Single State Stream パターン で state$ を購読 -->
+<!-- Angular 20の@if構文でObservableを購読 -->
+@if (state$ | async; as state) {
+  <!-- state.usersが存在する場合のみ表示 -->
+  @if (state.users.length > 0) {
+    <ul>
+      <!-- Angular 20の@for構文でループ処理 -->
+      @for (user of state.users; track user.id) {
+        <li>
+          <user-list-item [user]="user"></user-list-item>
+        </li>
+      }
+    </ul>
   }
-</ul>
+}
